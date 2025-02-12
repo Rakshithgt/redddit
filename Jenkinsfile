@@ -29,14 +29,9 @@ pipeline {
         }
         stage("Sonarqube Analysis") {
             steps {
-                withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
-                    sh '''
-                    sonar-scanner \
-                      -Dsonar.projectKey=Reddit-clone-ci \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=http://65.2.183.191:9000 \
-                      -Dsonar.login=$SONAR_TOKEN
-                    ''' 
+                withCredentials([string(credentialsId: 'SonarQube-Token')]) {
+                    sh ''''''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit-clone-ci \
+                    -Dsonar.projectKey=Reddit-clone-ci'''
                 }
             }
         }
