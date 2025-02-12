@@ -24,7 +24,7 @@ pipeline {
             steps {
                 git branch: 'main', 
                 credentialsId: 'github',
-                url: 'https://github.com/rakshithgt/a-reddit-clone.git'
+                url: 'https://github.com/Rakshithgt/redddit.git'
             }
         }
         stage("Sonarqube Analysis") {
