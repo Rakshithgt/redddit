@@ -30,7 +30,7 @@ pipeline {
         stage("Sonarqube Analysis") {
             steps {
                 withCredentials([string(credentialsId: 'SonarQube-Token')]) {
-                    sh ''''''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit-clone-ci \
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit-clone-ci \
                     -Dsonar.projectKey=Reddit-clone-ci'''
                 }
             }
