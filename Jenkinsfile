@@ -9,6 +9,7 @@ pipeline {
         APP_NAME = "reddit-clone-pipeline"
         RELEASE = "1.0.0"
         DOCKER_USER = "rakshithgt96"
+        DOCKER_PASS = 'dockerhub'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 	
@@ -21,18 +22,15 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', 
-                credentialsId: 'github',
-                url: 'https://github.com/Rakshithgt/redddit.git'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/Rakshithgt/redddit.git'
             }
         }
         stage("Sonarqube Analysis") {
             steps {
-                withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
+                wwithSonarQubeEnv(credentialsId: 'SonarQube-Token') {
                     sh '''
-                     $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit-clone-ci \
-                     -Dsonar.projectKey=Reddit-clone-ci \
-                     -Dsonar.login=$SONAR_TOKEN
+                     $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit-Clone-CI \
+                     -Dsonar.projectKey=Reddit-Clone-CI \
                     '''
                 }
             }
