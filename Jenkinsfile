@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         jdk 'JDK17'
-        nodejs 'node 16'
+        nodejs 'node16'
     }
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
@@ -52,21 +52,16 @@ pipeline {
          }
          stage("Build & Push Docker Image") {
              steps {
-                script {
-                    docker.withRegistry('',DOCKER_PASS) {
+                 script {
+                     docker.withRegistry('',DOCKER_PASS) {
                          docker_image = docker.build "${IMAGE_NAME}"
-                    }
-                    docker.withRegistry('',DOCKER_PASS) {
+                     }
+                     docker.withRegistry('',DOCKER_PASS) {
                          docker_image.push("${IMAGE_TAG}")
                          docker_image.push('latest')
-                    }
-                }
-             
-            }
-        }
+                     }
+                 }
+             }
+         }
     }
 }
-
-    }
-}
-	
