@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        jdk 'JDK17'
+        jdk 'jdk17'
         nodejs 'node 16'
     }
     environment {
@@ -27,12 +27,9 @@ pipeline {
         }
         stage("Sonarqube Analysis") {
             steps {
-                wwithSonarQubeEnv('SonarQube-Server') {
-                    sh '''
-                     $SCANNER_HOME/bin/sonar-scanner \
-                     -Dsonar.projectName=Reddit-Clone-CI \
-                     -Dsonar.projectKey=Reddit-Clone-CI
-                    '''
+                withSonarQubeEnv('SonarQube-Server') {
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit-Clone-CI \
+                    -Dsonar.projectKey=Reddit-Clone-CI'''
                 }
             }
         }
@@ -55,3 +52,4 @@ pipeline {
          }
     }
 }
+	
